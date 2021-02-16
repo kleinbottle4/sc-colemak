@@ -1,0 +1,13 @@
+Index: sc/sc.h
+===================================================================
+--- sc.orig/sc.h	2014-05-18 14:55:36.162030228 -0500
++++ sc/sc.h	2014-05-18 14:57:06.514031631 -0500
+@@ -43,7 +43,7 @@
+ #ifdef PSC
+ # define error(msg)	fprintf(stderr, msg);
+ #else
+-# define error isatty(fileno(stdout)) && !move(1,0) && !clrtoeol() && printw
++# define error(format, msg...) (void)(isatty(fileno(stdout)) && !move(1,0) && !clrtoeol() && printw(format, ## msg))
+ #endif
+ #define	FBUFLEN	1024	/* buffer size for a single field */
+ #define	PATHLEN	1024	/* maximum path length */

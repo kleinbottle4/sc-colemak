@@ -1,0 +1,15 @@
+This is the Debian GNU/Linux prepackaged version of the public domain
+spread sheet sc, posted several years ago by Mark Weiser as vc,
+originally by James Gosling.
+
+This package was originally put together by 
+Martin Schulze <joey@infodrom.north.de>, and later adopted by 
+Chad Miller <cmiller@debian.org>.  Source was obtained from:
+  http://ibiblio.org/pub/Linux/apps/financial/spreadsheet/sc-7.13.tar.gz
+
+Sc is not a product of ProsLink, Inc.  It is supplied as is with no
+warranty, express or implied, as a service to Usenet readers.  It is
+not copyrighted, either.  Have at it.
+
+Some of the files were originally written by Robert Bond, James
+Gosling, Bradley Williams or Mark Nagel.

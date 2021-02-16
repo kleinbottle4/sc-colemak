@@ -1,0 +1,22 @@
+Source: sc
+Section: math
+Priority: optional
+Build-Depends: libncurses5-dev, bison, debhelper (>>7)
+Maintainer: Adam Majer <adamm@zombino.com>
+Standards-Version: 3.9.5
+Vcs-Browser: http://git.debian.org/?p=collab-maint/sc.git;a=summary
+Vcs-Git: git://git.debian.org/collab-maint/sc.git
+
+Package: sc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Text-based spreadsheet with VI-like keybindings
+ "Spreadsheet Calculator" is a much modified version of the public-
+ domain spread sheet sc, which was posted to Usenet several years ago
+ by Mark Weiser as vc, originally by James Gosling. It is based on
+ rectangular table much like a financial spreadsheet.
+ .
+ Its keybindings are familiar to users of 'vi', and it has most
+ features that a pure spreadsheet would, but lacks things like
+ graphing and saving in foreign formats.  It's very stable and quite
+ easy to use once you've put a little effort into learning it.

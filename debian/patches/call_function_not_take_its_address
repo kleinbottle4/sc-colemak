@@ -1,0 +1,13 @@
+Index: sc/screen.c
+===================================================================
+--- sc.orig/screen.c	2011-09-26 23:17:21.000000000 -0500
++++ sc/screen.c	2014-05-18 15:01:24.170035634 -0500
+@@ -874,7 +874,7 @@
+ 		    }
+ 		} /* else */
+ 	    } else
+-	    if (!*pp && color && has_colors && cr && cr->r_color != 1) {
++	    if (!*pp && color && has_colors() && cr && cr->r_color != 1) {
+ 		move(r, c);
+ 		color_set(cr->r_color, NULL);
+ 		printw("%*s", fwidth[col], " ");
