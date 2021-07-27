@@ -2332,7 +2332,7 @@ copye(register struct enode *e, int Rdelta, int Cdelta, int r1, int c1,
 		    ret->e.v.vf = e->e.v.vf;
 		    break;
 		}
-	    case 't': //
+	    case 'k': //k
 		ret->e.k = e->e.k;
 		break;
 	    case 'f':
