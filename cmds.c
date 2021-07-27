@@ -992,10 +992,10 @@ get_rcqual(int ch)
 #ifdef KEY_IC
 	(ch == KEY_IC)		? "Insert r" :
 #endif
-	(ch == 'l')		? "Insert r" :
+	(ch == 'i')		? "Insert r" :
 	(ch == 'o')		? "Open r" :
 	(ch == 'a')		? "Append r" :
-	(ch == 'd')		? "Delete r" :
+	(ch == 'k')		? "Delete r" : //
 	(ch == 'y')		? "Yank r" :
 	(ch == 'p')		? "Pull r" :
 	(ch == 'v')		? "Values r" :
@@ -1019,7 +1019,7 @@ get_rcqual(int ch)
 
 	case 'x':	return ((ch == 'p') ? 'x' : 0);
 
-	case 't':	return ((ch == 'p') ? 't' : 0);
+	case 'l':	return ((ch == 'p') ? 'l' : 0); //
 
 	case 'f':	return ((ch == 'p') ? 'f' : 0);
 
@@ -1032,7 +1032,7 @@ get_rcqual(int ch)
 	case ESC:
 	case ctl('g'):	return (ESC);
 
-	case 'd':	if (ch == 'd') {
+	case 'k':	if (ch == 'k') { //
 			    ungetch('x');
 			    return (ESC);
 			} else
@@ -1056,14 +1056,14 @@ get_rcqual(int ch)
 	case KEY_DOWN:
 	case KEY_PPAGE:
 	case KEY_NPAGE:
-	case 'n':
-	case 'e':
-	case 'N':
-	case 'E':
+	case 'h': //
+	case 't': //
+	case 'H': //
+	case 'T': //
 	case ctl('f'):
 	case ctl('b'):
 	case ctl('n'):
-	case ctl('p'):	if (ch == 'd')
+	case ctl('p'):	if (ch == 'k') //
 			    (void) sprintf(line,"deleterow [range] ");
 			else if (ch == 'y')
 			    (void) sprintf(line,"yankrow [range] ");
@@ -1083,10 +1083,10 @@ get_rcqual(int ch)
 	case KEY_LEFT:
 	case KEY_RIGHT:
 	case ' ':
-	case 'h':
-	case 'i':
-	case 'H':
-	case 'I':	if (ch == 'd')
+	case 'd': //
+	case 'n': //
+	case 'D': //
+	case 'N':	if (ch == 'k') //
 			    (void) sprintf(line,"deletecol [range] ");
 			else if (ch == 'y')
 			    (void) sprintf(line,"yankcol [range] ");
@@ -1494,7 +1494,7 @@ formatcol(arg)
 	    switch (c) {
 		case KEY_LEFT:
 		case '<':
-		case 'h':
+		case 'd': //
 		    for (i = curcol; i < curcol + arg; i++) {
 			fwidth[i]--;
 			if (fwidth[i] < 1)
@@ -1506,7 +1506,7 @@ formatcol(arg)
 		    break;
 		case KEY_RIGHT:
 		case '>':
-		case 'l':
+		case 'n': //
 		    for (i = curcol; i < curcol + arg; i++) {
 			fwidth[i]++;
 			if (fwidth[i] > COLS - rescol - 2)
@@ -1518,7 +1518,7 @@ formatcol(arg)
 		    break;
 		case KEY_DOWN:
 		case '-':
-		case 'n':
+		case 'h': //
 		    for (i = curcol; i < curcol + arg; i++) {
 			precision[i]--;
 			if (precision[i] < 0)
@@ -1528,7 +1528,7 @@ formatcol(arg)
 		    break;
 		case KEY_UP:
 		case '+':
-		case 'e':
+		case 't': //
 		    for (i = curcol; i < curcol + arg; i++)
 			precision[i]++;
 		    modflg++;
@@ -2332,7 +2332,7 @@ copye(register struct enode *e, int Rdelta, int Cdelta, int r1, int c1,
 		    ret->e.v.vf = e->e.v.vf;
 		    break;
 		}
-	    case 'k':
+	    case 't': //
 		ret->e.k = e->e.k;
 		break;
 	    case 'f':
@@ -2413,7 +2413,7 @@ syncref(register struct enode *e)
 		} else if (e->e.v.vp->flags & may_sync)
 		    e->e.v.vp = lookat(e->e.v.vp->row, e->e.v.vp->col);
 		break;
-	    case 'k':
+	    case 'k': //k
 		break;
 	    case '$':
 		break;

@@ -613,18 +613,18 @@ main (int argc, char  **argv)
 		    if (linelim < 0 || mode_ind == 'v') {
 			switch (c = nmgetch()) {
 			    case KEY_UP:
-			    case ctl('p'): case 'e':	doend(-1, 0);	break;
+			    case ctl('p'): case 't':	doend(-1, 0);	break; //
 
 			    case KEY_DOWN:
-			    case ctl('n'): case 'n':	doend( 1, 0);	break;
+			    case ctl('n'): case 'h':	doend( 1, 0);	break; //
 
 			    case KEY_LEFT:
 			    case KEY_BACKSPACE:
-			    case ctl('h'): case 'h':	doend( 0,-1);	break;
+			    case ctl('h'): case 'd':	doend( 0,-1);	break; //
 
 			    case KEY_RIGHT:
 			    case ' ':
-			    case ctl('i'): case 'i':	doend( 0, 1);	break;
+			    case ctl('i'): case 'n':	doend( 0, 1);	break; //
 
 			    case ctl('e'):
 			    case ctl('y'):
@@ -896,13 +896,13 @@ main (int argc, char  **argv)
 				    craction = 0;
 				    error("No action after new line");
 				    break;
-				case 'n':
+				case 'h': //
 				case ctl('n'):
 				case KEY_DOWN:
 				    craction = CRROWS;
 				    error("Down row after new line");
 				    break;
-				case 'i':
+				case 'n': //
 				case ' ':
 				case KEY_RIGHT:
 				    craction = CRCOLS;
@@ -1366,10 +1366,10 @@ main (int argc, char  **argv)
 		 */
 
 		case KEY_IC:
-		case 'l':
+		case 'i':
 		case 'o':
 		case 'a':
-		case 'd':
+		case 'k': //
 		case 'y':
 		case 'p':
 		case 'v':
@@ -1390,7 +1390,7 @@ main (int argc, char  **argv)
 
 			switch (c) {
 
-			    case 'l':
+			    case 'i':
 				if (rcqual == 'r')	insertrow(arg, 0);
 				else			insertcol(arg, 0);
 				break;
@@ -1405,7 +1405,7 @@ main (int argc, char  **argv)
 				else			while (arg--) dupcol();
 				break;
 
-			    case 'd':
+			    case 'k': //
 				if (rcqual == 'r')	deleterow(arg);
 				else			closecol(arg);
 				break;
@@ -1613,7 +1613,7 @@ main (int argc, char  **argv)
 			    error("Nothing to center");
 			break;
 		    }
-		case 'k':
+		case 'e':
 		    if (!locked_cell(currow, curcol)) {
 			struct ent *p = lookat(currow, curcol);
 
@@ -1631,7 +1631,7 @@ main (int argc, char  **argv)
 			    edit_mode();
 		    }
 		    break;
-		case 'K':
+		case 'E':
 		    if (!locked_cell(currow, curcol)) {
 			/* set mark 0 */
 			savedrow[27] = currow;
@@ -1695,7 +1695,7 @@ main (int argc, char  **argv)
 		    linelim = strlen(line);
 		    insert_mode();
 		    break;
-		case 'j':
+		case 'j': //
 		    go_last();
 		    break;
 		case 'P':
@@ -1740,7 +1740,7 @@ main (int argc, char  **argv)
 		    linelim = strlen(line);
 		    insert_mode();
 		    break;
-		case 'D':
+		case 'K': //
 		    (void) sprintf(line, "mdir [\"macro_directory\"] \"");
 		    linelim = strlen(line);
 		    insert_mode();
@@ -1809,7 +1809,7 @@ main (int argc, char  **argv)
 		    linelim = strlen(line);
 		    insert_mode();
 		    break;
-		case 'T':	/* tbl output */
+		case 'L':	/* tbl output */
 		    (void) sprintf(line, "tbl [\"dest\" range] \"");
 
 /* See the comments under "case 'W':" above for an explanation of the
@@ -1866,24 +1866,24 @@ main (int argc, char  **argv)
 		    running = 0;
 		    break;
 		case KEY_LEFT:
-		case 'h':
+		case 'd': //
 		    backcol(arg);
 		    break;
 		case KEY_DOWN:
-		case 'n':
+		case 'h': //
 		    forwrow(arg);
 		    break;
 		case KEY_UP:
-		case 'e':
+		case 't': //
 		    backrow(arg);
 		    break;
-		case 'H':
+		case 'D': //
 			backcol(curcol - stcol + 2);
 			break;
 #ifdef KEY_NPAGE
 		case KEY_NPAGE:			/* next page */
 #endif
-		case 'N':
+		case 'H': //
 		    {
 		    int ps;
 
@@ -1896,7 +1896,7 @@ main (int argc, char  **argv)
 #ifdef	KEY_PPAGE
 		case KEY_PPAGE:			/* previous page */
 #endif
-		case 'E':
+		case 'T': //
 		    {
 		    int ps;
 
@@ -1912,12 +1912,12 @@ main (int argc, char  **argv)
 		    gohome();
 		    break;
 #endif
-		case 'I':
+		case 'N': //
 		    forwcol(lcols - (curcol - stcol) + 1);
 		    break;
 		case KEY_RIGHT:
 		case ' ':
-		case 'i':
+		case 'n': //
 		    forwcol(arg);
 		    break;
 		case 'm':

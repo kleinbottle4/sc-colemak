@@ -189,11 +189,11 @@ write_line(int c)
 	case 'B':	linelim = back_word(arg, 1);			break;
 	case 'C':	u_save(c); del_to_end(); append_line();		break;
 	case 'D':	u_save(c); del_to_end();			break;
-	case 'K':	linelim = for_word(arg, 1, 1, 0);		break;
+	case 'E':	linelim = for_word(arg, 1, 1, 0);		break;
 	case 'F':	linelim = find_char(arg, -1);			break;
 	case 'G':	if (histp > 0) histp = lasthist; for_hist();	break;
 	case 'I':	u_save(c); col_0(); insert_mode();		break;
-	case 'N':	search_again(true);				break;
+	case 'N':	search_again(true);				break; //J
 	case 'P':	u_save(c);
 			ins_string(putbuf);
 			linelim = back_line(1);				break;
@@ -205,23 +205,23 @@ write_line(int c)
 	case 'a':	u_save(c); append_line();			break;
 	case 'b':	linelim = back_word(arg, 0);			break;
 	case 'c':	u_save(c); yank_cmd(1, 1); insert_mode();	break;
-	case 'd':	u_save(c); yank_cmd(1, 0);			break;
-	case 'k':	linelim = for_word(arg, 1, 0, 0);		break;
+	case 'k':	u_save(c); yank_cmd(1, 0);			break;
+	case 'e':	linelim = for_word(arg, 1, 0, 0);		break;
 	case 'f':	linelim = find_char(arg, 1);			break;
 	case KEY_LEFT:
 	case (ctl('b')):
-	case 'h':	linelim = back_line(arg);			break;
+	case 'd':	linelim = back_line(arg);			break; //
 	case KEY_IC:
-	case 'l':	u_save(c); insert_mode();			break;
+	case 'i':	u_save(c); insert_mode();			break;
 	case KEY_DOWN:
-	case 'n':	for_hist();					break;
+	case 'h':	for_hist();					break; //
 	case KEY_UP:
-	case 'e':	back_hist();					break;
+	case 't':	back_hist();					break; //
 	case KEY_RIGHT:
 	case (ctl('f')):
 	case ' ':
-	case 'i':	linelim = for_line(arg, 0);			break;
-	case 'j':	search_again(false);				break;
+	case 'n':	linelim = for_line(arg, 0);			break; //
+	case 'j':	search_again(false);				break; //
 	case 'p':	u_save(c);
 			linelim = for_line(1, 1);
 			ins_string(putbuf);
@@ -229,7 +229,7 @@ write_line(int c)
 	case 'q':	stop_edit();					break;
 	case 'r':	u_save(c); rep_char();				break;
 	case 's':	u_save(c); del_in_line(arg, 0); insert_mode();	break;
-	case 't':	linelim = to_char(arg, 1);			break;
+	case 'l':	linelim = to_char(arg, 1);			break;
 	case 'u':	restore_it();					break;
 	case 'w':	linelim = for_word(arg, 0, 0, 0);		break;
 	case KEY_DC:
@@ -450,25 +450,25 @@ write_line(int c)
 				    showrange = 0;
 				}					break;
 	case KEY_LEFT:
-	case 'h':		backcol(arg);				break;
+	case 'd':		backcol(arg);				break;
 	case KEY_RIGHT:
-	case 'i':		forwcol(arg);				break;
+	case 'h':		forwcol(arg);				break;
 	case KEY_DOWN:
 	case (ctl('n')):
-	case 'n':		forwrow(arg);				break;
+	case 't':		forwrow(arg);				break;
 	case KEY_UP:
 	case (ctl('p')):
-	case 'e':		backrow(arg);				break;
+	case 'n':		backrow(arg);				break;
 	case 'q':
 	case ctl('g'):
 	case (ctl('v')):
 	case ESC:		toggle_navigate_mode();
 				showrange = 0;				break;
-	case 'H':		backcol(curcol - stcol + 2);
+	case 'D':		backcol(curcol - stcol + 2); //H
 									break;
 	case KEY_NPAGE:			/* next page */
 	case (ctl('f')):
-	case 'N':
+	case 'H': //J
 				{
 				int ps;
 
@@ -481,7 +481,7 @@ write_line(int c)
 									break;
 	case KEY_PPAGE:			/* previous page */
 	case (ctl('b')):
-	case 'E':
+	case 'T': //K
 				{
 				int ps;
 
@@ -493,7 +493,7 @@ write_line(int c)
 				FullUpdate++;
 				}
 									break;
-	case 'I':		forwcol(lcols - (curcol - stcol) + 1);	break;
+	case 'N':		forwcol(lcols - (curcol - stcol) + 1);	break; //L
 	case (ctl('a')):
 	case KEY_HOME:		gohome();				break;
 	case '0':		leftlimit();				break;
@@ -515,7 +515,7 @@ write_line(int c)
 	case '`': case '\'':	dotick(c);				break;
 	case '*':		if (nmgetch() == '*') gotonote();	break;
 	case 'g':		dogoto();				break;
-	case 'j':		go_last();				break;
+	case 'j':		go_last();				break; //n
 	case 'w':		{
 				register struct ent *p;
 
@@ -1218,15 +1218,15 @@ get_motion(int change)
 	case 'b':	return (back_word(arg, 0));
 	case 'B':	return (back_word(arg, 1));
 	case 'c':	return (change ? -1 : linelim);
-	case 'd':	return (!change ? -1 : linelim);
+	case 'k':	return (!change ? -1 : linelim);
 	case 'e':	return (for_word(arg, 1, 0, 1) + 1);
 	case 'E':	return (for_word(arg, 1, 1, 1) + 1);
 	case 'f':	return ((c = find_char(arg, 1)) == linelim ? c : c + 1);
 	case 'F':	return (find_char(arg, -1));
-	case 'h':	return (back_line(arg));
-	case 'l':	return (for_line(arg, 1));
-	case 't':	return ((c = to_char(arg, 1)) == linelim ? c : c + 1);
-	case 'T':	return (to_char(arg, -1));
+	case 'd':	return (back_line(arg)); //h
+	case 'n':	return (for_line(arg, 1)); //l
+	case 'l':	return ((c = to_char(arg, 1)) == linelim ? c : c + 1); //t
+	case 'L':	return (to_char(arg, -1));
 	case 'w':	return (for_word(arg, change, 0, 1) + change);
 	case 'W':	return (for_word(arg, change, 1, 1) + change);
 	default:	return (linelim);
